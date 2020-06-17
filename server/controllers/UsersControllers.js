@@ -76,7 +76,7 @@ class UsersController {
     try {
       u = JSON.parse(Helper.decryptBase64(provideAttribute.u));
 
-      console.log('U: ', u)
+      console.log("U: ", u);
 
       let user = await this.getInformationAsync(u);
       if (user) {
@@ -251,6 +251,40 @@ class UsersController {
           });
       });
     }
+  }
+
+  updatePassword(req, res) {
+    const { oldPassword, newPassword } = req.body;
+
+    console.log("user", req.user);
+
+    Users.findOne({
+      where: {
+        id: req.user.id,
+        password: Helper.hashPassword(oldPassword),
+      },
+    })
+    .then(user => {
+        console.log(user);
+
+        if(user){
+            user.update({
+                password: Helper.hashPassword(newPassword) 
+            })
+            .then(rs => {
+                res.send(Status.getStatus('success', 'Update password successful!'))
+            })
+            .catch(err => {
+                res.send(Status.getStatus('error', 'Update password faild!'))
+            })
+
+        }else{
+            res.send(Status.getStatus('error', 'Old password is incorrect!'))
+        }
+    })
+    .catch(err => {
+        res.send(Status.getStatus('error', 'Update password faild!'))
+    });
   }
 
   findAll(req, res) {

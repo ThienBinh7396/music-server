@@ -58,7 +58,8 @@ router.post('/friend/cancelInteraction', [Auth.verifyTokenClient.bind(Auth), fri
 router.post('/users/register', [uCtrl.createUser]);
 router.post('/users/checkLogin', [uCtrl.checkLogin]);
 
-router.post('/users/updateUser', [Auth.verifyTokenClient.bind(Auth), uCtrl.updateUser]);
+router.post('/users/updateUser', [Auth.verifyTokenClient.bind(Auth), uCtrl.updateUser.bind(uCtrl)]);
+router.post('/users/updatePassword', [Auth.verifyTokenClient.bind(Auth), uCtrl.updatePassword.bind(uCtrl)]);
 
 router.post('/users/checkToken', [Auth.checkToken]);
 
