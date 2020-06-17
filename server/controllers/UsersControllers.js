@@ -42,10 +42,6 @@ class UsersController {
             res.send(Status.getStatus('error', 'Information is invalid'));
         }
 
-
-
-
-
     }
 
 
@@ -101,7 +97,7 @@ class UsersController {
 
     updateUser(req, res) {
 
-        const { id, name, thumbnail, email, password, description, color } = req.body;
+        const { id, name, thumbnail, description, color, banner } = req.body;
 
         if (!id || id != req.user.id) {
             res.status(200).send(Status.getStatus('error', "Invalid id"));
@@ -115,12 +111,10 @@ class UsersController {
                 user.update({
                     name: name || user.name,
                     thumbnail: thumbnail || user.thumbnail,
-                    email: email || user.email,
+                    banner: banner || user.banner,
                     description: description || user.description,
                     color: color || user.color,
-                    password: (password ? Helper.hashPassword(password) : user.password)
                 }).then((updatedUser) => {
-
                     res.status(200).send(Status.getStatus('success', 'Successful'));
                 }).catch(err => {
                     res.status(200).send(Status.getStatus('error', err.errors ? err.errors.map(it => it.message) : "Something went wrong"));
