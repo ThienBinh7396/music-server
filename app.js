@@ -17,7 +17,7 @@ var app = express();
 var allowCrossDomain = function (req, res, next) {
   res.header(
     "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Origin, x-access-token"
+    "Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Origin, x-access-token, Access-Control-Allow-Credentials"
   );
 
   var allowedOrigins = [
@@ -76,7 +76,7 @@ app.use(function (err, req, res, next) {
   res.render("error");
 });
 
-app.listen(6002, () => {
+app.listen(3000, () => {
   console.log("Server listening at %s:%d ", app.get("host"), app.get("port"));
 });
 
